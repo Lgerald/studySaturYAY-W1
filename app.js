@@ -20,7 +20,7 @@ app.use((err, req, res, next) => {
 
 //routes
 app.use('/poop', require('./routes'))
-//app.use('/test', require('./routes/test'))
+app.use('/test', require('./routes/test'))
 
 
 //listen on port

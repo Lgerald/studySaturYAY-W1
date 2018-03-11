@@ -10,7 +10,31 @@ let students = [
     { id: 5, name: 'Karen' },
 ];
 
+let tests = [
+    { id: 0, subject: 'Physics', score: 99, studentId: 0 },
+    { id: 1, subject: 'English', score: 78, studentId: 1 },
+    { id: 2, subject: 'Math', score: 90, studentId: 3 },
+    { id: 3, subject: 'English', score: 55, studentId: 3 },
+    { id: 4, subject: 'Physics', score: 88, studentId: 4 },
+]
 
+function testsForStudent(id) {
+    let studentTests = []
+    tests.forEach((test) => {
+        if (test.studentId === id) {
+            studentTests.push(test);
+        }
+    })
+    return studentTests;
+}
+
+function getAverageForStudent(testBank) {
+    let sum = 0;
+    testBank.forEach((test) => {
+        sum += test.score;
+    })
+    return (sum / testBank.length);
+}
 //GET all our students
 //"/student"
 router.get('/', (req, res, next) => {
@@ -19,9 +43,13 @@ router.get('/', (req, res, next) => {
 
 //GET students by id
 router.get('/:id', (req, res, next) => {
-
-    let student = students.find(person => person.id === +req.params.id)
-    res.json(student)
+    let testBank = testsForStudent(+req.params.id);
+    let average = getAverageForStudent(testBank);
+    students[req.params.id].average = average;
+    //let test = tests.find(t => t.id === +req.params.id)
+    res.json(students[req.params.id]);
+    // let student = students.find(person => person.id === +req.params.id)
+    // res.json(student)
 })
 
 // POST student
